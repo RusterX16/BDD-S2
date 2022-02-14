@@ -331,4 +331,33 @@ FROM Clients client
          JOIN Bungalows b ON l.idBungalow = b.idBungalow
          JOIN Campings camp ON b.idCamping = camp.idCamping
 WHERE nomCamping = 'La Décharge Monochrome'
-ORDER BY nomClient;
+ORDER BY nomClient, prenomclient;
+
+
+-- R28 :
+
+SELECT nomEmploye, prenomEmploye, nomCamping
+FROM Employes e
+         LEFT JOIN Campings c ON e.idCamping = c.idCamping
+ORDER BY nomEmploye;
+
+
+-- R29 :
+
+SELECT DISTINCT nomClient, prenomClient
+FROM Clients client
+         JOIN Locations l ON client.idClient = l.idClient
+         JOIN BUngalows b ON l.idBungalow = b.idBungalow
+WHERE idCamping IN (
+    SELECT camp.idCamping
+    FROM Campings camp
+             JOIN Bungalows b_ ON camp.idCamping = b_.idCamping
+             JOIN Locations l_ ON b_.idBungalow = l_.idBungalow
+    WHERE l_.idClient = (
+        SELECT idClient
+        FROM Clients
+        WHERE nomClient = 'Bricot'
+          AND prenomClient = 'Judas'
+    ) AND l.dateDebut >= l_.dateFin OR l.dateFin <= l_.dateDebut
+)
+ORDER BY nomClient, prenomClient;
