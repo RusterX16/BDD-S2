@@ -202,7 +202,7 @@ FROM BungalowsUnSeulService;
 
 -- R97 :
 
-CREATE OR REPLACE VIEW BungalowsLePlusDeServicesParCamping AS
+CREATE OR REPLACE VIEW BungalowsLePlusDeServices AS
 SELECT b.idBungalow
 FROM Bungalows b
          JOIN Proposer p ON b.idBungalow = p.idBungalow
