@@ -111,9 +111,55 @@ BEGIN
     ELSE
         RETURN NULL;
     END IF;
-
 END;
+/
+SHOW ERROR;
 
 
-SELECT nbEtudiantsGroupes('T4')
-FROM Dual;
+
+-- X :
+
+CREATE OR REPLACE PROCEDURE afficherNbEtudiantsGroupes(p_idGroupe Groupes.idGroupe%TYPE) IS
+    nb NUMBER;
+BEGIN
+    nb := nbEtudiantsGroupes(p_idGroupe);
+
+    IF nb IS NOT NULL
+    THEN
+        DBMS_OUTPUT.PUT_LINE('Il y a ' || nb || ' étudiants dans le groupe ' || p_idGroupe);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Il n''y a pas de groupe ' || p_idGroupe);
+    END IF;
+END;
+/
+SHOW ERROR;
+
+
+CALL afficherNbEtudiantsGroupes('T1');
+
+
+-- 5 :
+
+CREATE OR REPLACE PROCEDURE afficherEtudiant(p_idEtudiant Etudiants.idEtudiant%TYPE) IS
+    idEtudiant            VARCHAR(2);
+    nomEtudiant           VARCHAR(32);
+    prenomEtudiant        VARCHAR(32);
+    sexeEtudiant          VARCHAR(1);
+    dateNaissanceEtudiant DATE;
+    idGroupe              VARCHAR(2);
+BEGIN
+    SELECT idEtudiant INTO idEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT nomEtudiant INTO nomEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT prenomEtudiant INTO prenomEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT sexeEtudiant INTO sexeEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT dateNaissanceEtudiant INTO dateNaissanceEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT idGroupe INTO idGroupe FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    DBMS_OUTPUT.PUT_LINE('Identifiant étudiant : ' || idEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Nom étudiant : ' || prenomEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Prénom étudiant : ' || nomEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Sexe étudiant : ' || sexeEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Date naissance étudiant : ' || dateNaissanceEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Groupe étudiant : ' || idGroupe);
+END;
+/
+SHOW ERROR;
