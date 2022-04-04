@@ -18,7 +18,7 @@ END;
 
 -- 2 :
 
-ACCEPT v_id PROMPT 'Saisir le nom du groupe' ;
+ACCEPT v_id PROMPT 'Saisir le nom du groupe';
 DECLARE
     v_amount NUMBER;
 BEGIN
@@ -30,7 +30,7 @@ BEGIN
 END;
 
 
-ACCEPT v_id PROMPT 'Saisir le nom du groupe' ;
+ACCEPT v_id PROMPT 'Saisir le nom du groupe';
 DECLARE
     v_amount NUMBER;
 BEGIN
@@ -44,13 +44,13 @@ END;
 
 -- 3 :
 
-ACCEPT v_id PROMPT 'Saisir le nom du groupe' ;
+ACCEPT v_id PROMPT 'Saisir le nom du groupe';
 DECLARE
-    rty_Camping Groupes%ROWTYPE;
-    v_amount    NUMBER;
+    rty      Groupes%ROWTYPE;
+    v_amount NUMBER;
 BEGIN
     SELECT *
-    INTO rty_camping
+    INTO rty
     FROM Groupes
     WHERE idGroupe = '&v_id';
 
@@ -92,6 +92,33 @@ END;
 
 -- 5 :
 
+CREATE OR REPLACE PROCEDURE afficherEtudiant(p_idEtudiant Etudiants.idEtudiant%TYPE) IS
+    idEtudiant            VARCHAR(2);
+    nomEtudiant           VARCHAR(32);
+    prenomEtudiant        VARCHAR(32);
+    sexeEtudiant          VARCHAR(1);
+    dateNaissanceEtudiant DATE;
+    idGroupe              VARCHAR(2);
+BEGIN
+    SELECT idEtudiant INTO idEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT nomEtudiant INTO nomEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT prenomEtudiant INTO prenomEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT sexeEtudiant INTO sexeEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT dateNaissanceEtudiant INTO dateNaissanceEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    SELECT idGroupe INTO idGroupe FROM Etudiants WHERE idEtudiant = p_idEtudiant;
+    DBMS_OUTPUT.PUT_LINE('Identifiant étudiant : ' || idEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Nom étudiant : ' || prenomEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Prénom étudiant : ' || nomEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Sexe étudiant : ' || sexeEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Date naissance étudiant : ' || dateNaissanceEtudiant);
+    DBMS_OUTPUT.PUT_LINE('Groupe étudiant : ' || idGroupe);
+END;
+/
+SHOW ERROR;
+
+
+-- 6 :
+
 CREATE OR REPLACE FUNCTION nbEtudiantsGroupes(p_idGroupe Groupes.idGroupe%TYPE) RETURN NUMBER IS
     v_nbEtudiants NUMBER;
     v_nbGroupes   NUMBER;
@@ -116,7 +143,6 @@ END;
 SHOW ERROR;
 
 
-
 -- X :
 
 CREATE OR REPLACE PROCEDURE afficherNbEtudiantsGroupes(p_idGroupe Groupes.idGroupe%TYPE) IS
@@ -134,32 +160,19 @@ END;
 /
 SHOW ERROR;
 
-
 CALL afficherNbEtudiantsGroupes('T1');
 
 
--- 5 :
+-- 7 :
 
-CREATE OR REPLACE PROCEDURE afficherEtudiant(p_idEtudiant Etudiants.idEtudiant%TYPE) IS
-    idEtudiant            VARCHAR(2);
-    nomEtudiant           VARCHAR(32);
-    prenomEtudiant        VARCHAR(32);
-    sexeEtudiant          VARCHAR(1);
-    dateNaissanceEtudiant DATE;
-    idGroupe              VARCHAR(2);
+CREATE OR REPLACE FUNCTION nbEtudiantsPromotion(p_idPromotion IN Promotions.idPromotion%TYPE) RETURN NUMBER IS
+    nb NUMBER;
 BEGIN
-    SELECT idEtudiant INTO idEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
-    SELECT nomEtudiant INTO nomEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
-    SELECT prenomEtudiant INTO prenomEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
-    SELECT sexeEtudiant INTO sexeEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
-    SELECT dateNaissanceEtudiant INTO dateNaissanceEtudiant FROM Etudiants WHERE idEtudiant = p_idEtudiant;
-    SELECT idGroupe INTO idGroupe FROM Etudiants WHERE idEtudiant = p_idEtudiant;
-    DBMS_OUTPUT.PUT_LINE('Identifiant étudiant : ' || idEtudiant);
-    DBMS_OUTPUT.PUT_LINE('Nom étudiant : ' || prenomEtudiant);
-    DBMS_OUTPUT.PUT_LINE('Prénom étudiant : ' || nomEtudiant);
-    DBMS_OUTPUT.PUT_LINE('Sexe étudiant : ' || sexeEtudiant);
-    DBMS_OUTPUT.PUT_LINE('Date naissance étudiant : ' || dateNaissanceEtudiant);
-    DBMS_OUTPUT.PUT_LINE('Groupe étudiant : ' || idGroupe);
+    SELECT SUM(nbEtudiantsGroupes(idGroupe))
+    INTO nb
+    FROM Groupes
+    WHERE idPromotion = p_idPromotion;
+    RETURN nb;
 END;
 /
 SHOW ERROR;
