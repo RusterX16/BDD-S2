@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/TD-Triggers/TD-Triggers.sql" dialect="OracleSqlPlus" />
     <file url="file://$PROJECT_DIR$/TD2/MidiHome Camping.sql" dialect="OracleSqlPlus" />
     <file url="file://$PROJECT_DIR$/TD2/TD2.sql" dialect="OracleSqlPlus" />
-    <file url="file://$PROJECT_DIR$/TD7/TD7_Partie1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/TP/TP.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/TP/TP_note.sql" dialect="OracleSqlPlus" />
     <file url="PROJECT" dialect="Oracle" />
+  </component>
+  <component name="SqlResolveMappings">
+    <file url="file://$PROJECT_DIR$/TP/TP.sql" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
   </component>
 </project>

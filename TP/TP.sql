@@ -176,3 +176,64 @@ BEGIN
 END;
 /
 SHOW ERROR;
+
+
+-- 9 :
+
+CREATE OR REPLACE PROCEDURE miseAJourCoefficientModules IS
+
+
+-- 10 :
+
+CREATE OR REPLACE PROCEDURE afficheNoteEtudiant(p_idEtudiant IN Etudiants.idEtudiant%TYPE) IS
+    v_prog_ada                NUMBER;
+    v_bd                      NUMBER;
+    v_maths                   NUMBER;
+    v_gestion                 NUMBER;
+    v_projet                  NUMBER;
+    v_initation_joolma        NUMBER;
+    v_prog_objet              NUMBER;
+    v_bd_avance               NUMBER;
+    v_statistiques            NUMBER;
+    v_anglais                 NUMBER;
+    v_gestion_de_projet_agile NUMBER;
+BEGIN
+    SELECT note
+    INTO v_prog_ada
+    FROM Notes n
+             JOIN Matieres m ON n.idMatiere = m.idMatiere
+    WHERE nomMatiere = 'Prog Ada';
+    SELECT note
+    INTO v_bd
+    FROM Notes n
+             JOIN Matieres m ON n.idMatiere = m.idMatiere
+    WHERE nomMatiere = 'Prog Ada';
+    SELECT note
+    INTO v_maths
+    FROM Notes n
+             JOIN Matieres m ON n.idMatiere = m.idMatiere
+    WHERE nomMatiere = 'Prog Ada';
+    SELECT note
+    INTO v_gestion
+    FROM Notes n
+             JOIN Matieres m ON n.idMatiere = m.idMatiere
+    WHERE nomMatiere = 'Prog Ada';
+    SELECT note
+    INTO v_projet
+    FROM Notes n
+             JOIN Matieres m ON n.idMatiere = m.idMatiere
+    WHERE nomMatiere = 'Prog Ada';
+    SELECT note
+    INTO v_initation_joolma
+    FROM Notes n
+             JOIN Matieres m ON n.idMatiere = m.idMatiere
+    WHERE nomMatiere = 'Initiation Joolma';
+    DBMS_OUTPUT.PUT_LINE('Prog Ada : ' || v_prog_ada);
+    DBMS_OUTPUT.PUT_LINE('Prog Ada : ' || v_prog_ada);
+    DBMS_OUTPUT.PUT_LINE('Prog Ada : ' || v_prog_ada);
+    DBMS_OUTPUT.PUT_LINE('Prog Ada : ' || v_prog_ada);
+    DBMS_OUTPUT.PUT_LINE('Prog Ada : ' || v_prog_ada);
+    DBMS_OUTPUT.PUT_LINE('Prog Ada : ' || v_prog_ada);
+END;
+/
+SHOW ERROR
