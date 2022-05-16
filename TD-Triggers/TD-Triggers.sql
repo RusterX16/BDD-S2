@@ -78,9 +78,44 @@ CREATE OR REPLACE TRIGGER AffecterSalarieEquipe
 DECLARE
     v_count NUMBER;
 BEGIN
-    SELECT COUNT(*) INTO v_count FROM EtreAffecte;
+    SELECT COUNT(*)
+    INTO v_count
+    FROM EtreAffecte
+    WHERE codeSalarie = :NEW.codeSalarie;
 
-    IF v_count <= 0 OR v_count > 3 THEN
+    IF v_count >= 3 THEN
         RAISE_APPLICATION_ERROR(-20001, 'Le salarié est déjà affecté à au moins 3 équipes');
     END IF;
 END;
+
+
+-- 3 :
+
+-- A :
+
+CREATE OR REPLACE TRIGGER MiseAJourJourneeTravail
+    AFTER INSERT OR DELETE OR UPDATE OF codeSalarie
+    ON Travailler
+    FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        UPDATE Salaries
+        SET nbTotalJourneesTravail = nbTotalJourneesTravail + 1
+        WHERE codeSalarie = :NEW.codeSalarie;
+    END IF;
+    IF DELETING THEN
+        UPDATE Salaries
+        SET nbTotalJourneesTravail = nbTotalJourneesTravail - 1
+        WHERE codeSalarie = :OLD.codeSalarie;
+    END IF;
+    IF UPDATING THEN
+        UPDATE Salaries
+        SET nbTotalJourneesTravail = nbTotalJourneesTravail - 1
+        WHERE codeSalarie = :OLD.codeSalarie;
+        UPDATE Salaries
+        SET nbTotalJourneesTravail = nbTotalJourneesTravail + 1
+        WHERE codeSalarie = :NEW.codeSalarie;
+    END IF;
+END;
+/
+SHOW ERRORS;

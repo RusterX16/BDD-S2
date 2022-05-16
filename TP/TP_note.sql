@@ -151,9 +151,8 @@ BEGIN
 
     IF v_moy >= 10 THEN
         RETURN 'O';
-    ELSE
-        RETURN 'N';
     END IF;
+    RETURN 'N';
 END;
 /
 SHOW ERRORS;
